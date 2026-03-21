@@ -28,10 +28,10 @@ TARGET = 3000
 SCROBBLE_DELAY = 2.6
 
 ARTISTAS = [
-      {"artist": "Cuntsniffer", "track": "Meant To Be", "album": "Meant To Be"},
-      {"artist": "Cuntsniffer", "track": "Meant To Be", "album": "Meant To Be"},
-      {"artist": "Cuntsniffer", "track": "Meant To Be", "album": "Meant To Be"},
-      {"artist": "Cuntsniffer", "track": "Meant To Be", "album": "Meant To Be"},
+      {"artist": "Nightlight", "track": "no hace daño", "album": "YFC*"},
+      {"artist": "Nightlight", "track": "no hace daño", "album": "YFC*"},
+      {"artist": "Nightlight", "track": "no hace daño", "album": "YFC*"},
+      {"artist": "Nightlight", "track": "no hace daño", "album": "YFC*"},
 
 
 ]   
