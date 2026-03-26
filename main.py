@@ -46,31 +46,32 @@ def start_script(script):
 
 def wait_until_15_arg():
     while True:
-        # Argentina = UTC-3
-        now = datetime.datetime.utcnow() - datetime.timedelta(hours=3)
-        print("Hora Argentina:", now.strftime("%H:%M"))
-        
+        now = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=3)
+        print("Esperando... Hora Argentina:", now.strftime("%H:%M:%S"), flush=True)
+
         if now.hour == 15 and now.minute == 0:
-            print("Son las 15:00, iniciando todos...")
+            print("Son las 15:00 Argentina, iniciando todos...", flush=True)
             return
         
-        time.sleep(20)
+        time.sleep(5)
 
 # Esperar hasta las 15:00
 wait_until_15_arg()
 
-print("Matando procesos viejos...")
+print("Matando procesos viejos...", flush=True)
 os.system("pkill -f python3")
 
-print("Iniciando todos los scrobblers al mismo tiempo...")
+print("Iniciando todos los scrobblers al mismo tiempo...", flush=True)
 for script in scripts:
     processes[script] = start_script(script)
-    print("Iniciado:", script)
+    print("Iniciado:", script, flush=True)
+
+print("Sistema de reinicio automático activado.", flush=True)
 
 # Auto-restart
 while True:
     for script, process in processes.items():
         if process.poll() is not None:
-            print("Reiniciando:", script)
+            print("Reiniciando:", script, flush=True)
             processes[script] = start_script(script)
     time.sleep(20)
