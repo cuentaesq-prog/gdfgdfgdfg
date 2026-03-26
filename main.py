@@ -1,7 +1,10 @@
 import subprocess
 import time
+import os
+import datetime
 
 scripts = [
+    "suhkumi.py",
     "nightlight.py",
     "1okktubre.py",
     "2slimey.py",
@@ -41,17 +44,33 @@ processes = {}
 def start_script(script):
     return subprocess.Popen(["python3", script])
 
-print("Iniciando todos los scrobblers...")
+def wait_until_15_arg():
+    while True:
+        # Argentina = UTC-3
+        now = datetime.datetime.utcnow() - datetime.timedelta(hours=3)
+        print("Hora Argentina:", now.strftime("%H:%M"))
+        
+        if now.hour == 15 and now.minute == 0:
+            print("Son las 15:00, iniciando todos...")
+            return
+        
+        time.sleep(20)
 
+# Esperar hasta las 15:00
+wait_until_15_arg()
+
+print("Matando procesos viejos...")
+os.system("pkill -f python3")
+
+print("Iniciando todos los scrobblers al mismo tiempo...")
 for script in scripts:
     processes[script] = start_script(script)
     print("Iniciado:", script)
-    time.sleep(10)
 
+# Auto-restart
 while True:
     for script, process in processes.items():
         if process.poll() is not None:
             print("Reiniciando:", script)
             processes[script] = start_script(script)
-            time.sleep(5)
     time.sleep(20)
